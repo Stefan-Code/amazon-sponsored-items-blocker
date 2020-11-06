@@ -23,7 +23,7 @@ function removeSponsoredAds() {
     if (pageContentchanged) {
         var count = 0;
         $('.celwidget').each(function(i, obj) {
-            if ($(this).find(".s-sponsored-info-icon").length > 0) {
+            if ($(this).find(".s-sponsored-label-info-icon").length > 0) {
                 //console.log("Object " + i + " contains an ad");
                 //$(this).css('background-color', 'red');
                 (this).remove();
