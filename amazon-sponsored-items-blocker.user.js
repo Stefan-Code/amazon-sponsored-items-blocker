@@ -11,6 +11,8 @@
 
 // using: ES2015
 
+const label = 'amazon-sponsored-items-blocker';
+
 const isAd = node =>
     node instanceof HTMLElement &&
     node.classList.contains('AdHolder');
@@ -27,7 +29,7 @@ const removeSponsoredAds = mutations => {
         // console.log(`Object #${ad} contains an ad`);
         ad.remove();
     }
-    console.log(`amazon-sponsored-items-blocker: ${ads.length} ads removed!`);
+    console.log(`${label}: ${ads.length} ads removed!`);
 };
 const observer = new MutationObserver(removeSponsoredAds);
 
@@ -41,7 +43,7 @@ if (main) {
         subtree: true,
     });
 } else {
-    console.error('amazon-sponsored-items-blocker: No Target');
+    console.error(`${label}: no target`);
 }
 
-console.log("amazon-sponsored-items-blocker: loaded");
+console.log(`${label}: loaded`);
