@@ -12,10 +12,13 @@
 // using: ES2015
 
 const label = 'amazon-sponsored-items-blocker';
+const mainId = 'search';
+const listClass = 's-main-slot';
+const adClass = 'AdHolder';
 
 const isAd = node =>
     node instanceof HTMLElement &&
-    node.classList.contains('AdHolder');
+    node.classList.contains(adClass);
 
 /**
  * @param {MutationRecord[]} mutations
@@ -37,7 +40,7 @@ const observer = new MutationObserver(removeSponsoredAds);
 /**
  * @type {Element | null}
  */
-const main = document.getElementById('search').getElementsByClassName('s-main-slot').item(0);
+const main = document.getElementById(mainId).getElementsByClassName(listClass).item(0);
 if (main) {
     observer.observe(main, {
         childList: true,
