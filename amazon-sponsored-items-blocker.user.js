@@ -11,30 +11,37 @@
 
 // using: ES2015
 
-// FIXME: @see https://developer.mozilla.org/en-US/docs/Archive/Events/DOMSubtreeModified
-let pageContentChanged = false;
-document.body.addEventListener("DOMSubtreeModified", () => {
-    pageContentChanged = true;
-});
-setInterval(removeSponsoredAds, 200);
-console.log("amazon-sponsored-items-blocker loaded");
+const hasAd = node =>
+    node instanceof HTMLElement &&
+    node.getElementsByClassName("s-sponsored-label-info-icon").length > 0;
 
-function removeSponsoredAds() {
-    // guard
-    if (!pageContentChanged) {
-        return;
+/**
+ * @param {MutationRecord[]} mutations
+ */
+const removeSponsoredAds = mutations => {
+    /**
+     * @type {HTMLElement[]}
+     */
+    const ads = mutations.flatMap(({target: {childNodes}}) => Array.from(childNodes)).filter(hasAd);
+    for (const ad of ads) {
+        // console.log(`Object #${ad} contains an ad`);
+        ad.remove();
     }
+    console.log(`amazon-sponsored-items-blocker: ${ads.length} ads removed!`);
+};
+const observer = new MutationObserver(removeSponsoredAds);
 
-    let count = 0;
-    const elements = document.getElementsByClassName('celwidget');
-    Array.from(elements).forEach(function (elem, i) {
-        if (elem.getElementsByClassName("s-sponsored-label-info-icon").length > 0) {
-            // console.log(`Object #${i} contains an ad`);
-            // elem.setAttribute('style','background-color: red;');
-            elem.remove();
-            count++;
-        }
+/**
+ * @type {Element | null}
+ */
+const main = document.getElementById('search').getElementsByClassName('s-main-slot').item(0);
+if (main) {
+    observer.observe(main, {
+        childList: true,
+        subtree: true,
     });
-    console.log(`amazon-sponsored-items-blocker: ${count} ads removed!`);
-    pageContentChanged = false;
+} else {
+    console.error('amazon-sponsored-items-blocker: No Target');
 }
+
+console.log("amazon-sponsored-items-blocker: loaded");
