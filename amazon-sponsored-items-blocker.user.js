@@ -5,30 +5,36 @@
 // @description  Blocks sponsored search results on Amazon
 // @include      *://www.amazon.*/*
 // @include      *://www.amazon.co.*/*
-// @require      http://code.jquery.com/jquery-latest.js
 // @grant        none
 // @run-at document-end
 // ==/UserScript==
-$ = jQuery.noConflict(true);
-var pageContentchanged = false;
-$('body').bind("DOMSubtreeModified", function() {
-    pageContentchanged = true;
+
+// using: ES2015
+
+// FIXME: @see https://developer.mozilla.org/en-US/docs/Archive/Events/DOMSubtreeModified
+let pageContentChanged = false;
+document.body.addEventListener("DOMSubtreeModified", () => {
+    pageContentChanged = true;
 });
 setInterval(removeSponsoredAds, 200);
 console.log("amazon-sponsored-items-blocker loaded");
 
 function removeSponsoredAds() {
-    if (pageContentchanged) {
-        var count = 0;
-        $('.celwidget').each(function(i, obj) {
-            if ($(this).find(".s-sponsored-label-info-icon").length > 0) {
-                //console.log("Object " + i + " contains an ad");
-                //$(this).css('background-color', 'red');
-                (this).remove();
-                count++;
-            }
-        });
-        console.log("amazon-sponsored-items-blocker: " + count + " ads removed!");
-        pageContentchanged = false;
+    // guard
+    if (!pageContentChanged) {
+        return;
     }
+
+    let count = 0;
+    const elements = document.getElementsByClassName('celwidget');
+    Array.from(elements).forEach(function (elem, i) {
+        if (elem.getElementsByClassName("s-sponsored-label-info-icon").length > 0) {
+            // console.log(`Object #${i} contains an ad`);
+            // elem.setAttribute('style','background-color: red;');
+            elem.remove();
+            count++;
+        }
+    });
+    console.log(`amazon-sponsored-items-blocker: ${count} ads removed!`);
+    pageContentChanged = false;
 }
