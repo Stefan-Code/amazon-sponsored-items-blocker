@@ -25,8 +25,9 @@ const removeSponsoredAds = mutations => {
      * @type {HTMLElement[]}
      */
     const ads = mutations.flatMap(({target: {childNodes}}) => Array.from(childNodes)).filter(isAd);
+    console.debug(`${label}: ads:`, ads);
+
     for (const ad of ads) {
-        // console.log(`Object #${ad} contains an ad`);
         ad.remove();
     }
     console.log(`${label}: ${ads.length} ads removed!`);
