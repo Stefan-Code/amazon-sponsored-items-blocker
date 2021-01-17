@@ -24,6 +24,7 @@ const isAd = node =>
  * @param {MutationRecord[]} mutations
  */
 const removeSponsoredAds = mutations => {
+    console.debug(mutations);
     /**
      * @type {HTMLElement[]}
      */
