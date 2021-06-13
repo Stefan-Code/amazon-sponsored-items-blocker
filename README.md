@@ -1,5 +1,5 @@
 # amazon-sponsored-items-blocker
-A Greasemonkey / Tampermonkey script that **blocks sponsored search results** on amazon.com, amazon.co.uk and amazon.de
+A Greasemonkey / Tampermonkey script that **blocks sponsored search results** on amazon.com, amazon.co.uk, amazon.co.jp and amazon.de
 
 Basically removes these annoying search results:
 
