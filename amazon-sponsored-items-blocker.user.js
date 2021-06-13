@@ -7,6 +7,7 @@
 // @include      *://www.amazon.de/*
 // @include      *://www.amazon.com/*
 // @include      *://www.amazon.co.uk/*
+// @include      *://www.amazon.co.jp/*
 // @require      http://code.jquery.com/jquery-latest.js
 // @grant        none
 // @run-at document-end
