@@ -13,9 +13,9 @@
 // @run-at document-end
 // ==/UserScript==
 $ = jQuery.noConflict(true);
-let pageContentchanged = false;
+let pageContentChanged = false;
 const observer = new MutationObserver(() => {
-  pageContentchanged = true;
+  pageContentChanged = true;
 });
 observer.observe(document.body, {
   childList: true,
@@ -25,7 +25,7 @@ setInterval(removeSponsoredAds, 200);
 console.log("amazon-sponsored-items-blocker loaded");
 
 function removeSponsoredAds() {
-  if (pageContentchanged) {
+  if (pageContentChanged) {
     let count = 0;
     $(".celwidget").each(function (i, obj) {
       if ($(this).find(".s-sponsored-label-info-icon").length > 0) {
@@ -36,6 +36,6 @@ function removeSponsoredAds() {
       }
     });
     console.log("amazon-sponsored-items-blocker: " + count + " ads removed!");
-    pageContentchanged = false;
+    pageContentChanged = false;
   }
 }
