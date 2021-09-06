@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Amazon sponsored items blocker
 // @namespace    https://github.com/Stefan-Code/amazon-sponsored-items-blocker
-// @version      0.1
+// @version      0.2.0
 // @description  Blocks sponsored search results on amazon.com, amazon.co.uk and amazon.de
 // @author       Stefan-Code
 // @include      *://www.amazon.de/*
