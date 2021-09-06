@@ -29,7 +29,7 @@ function removeSponsoredAds() {
   if (!pageContentChanged) {
     return;
   }
-  const ads = $(".AdHolder").has(".s-sponsored-label-info-icon");
+  const ads = $(".AdHolder");
   ads.each(function (i, elem) {
     // console.log("Object " + i + " contains an ad");
     // $(elem).css("background-color", "red");
