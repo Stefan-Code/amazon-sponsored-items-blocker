@@ -26,16 +26,15 @@ console.log("amazon-sponsored-items-blocker loaded");
 
 function removeSponsoredAds() {
   if (pageContentChanged) {
-    let count = 0;
-    $(".celwidget").each(function (_i) {
-      if ($(this).find(".s-sponsored-label-info-icon").length > 0) {
-        //console.log("Object " + i + " contains an ad");
-        //$(this).css('background-color', 'red');
-        this.remove();
-        count++;
-      }
+    const ads = $(".celwidget").has(".s-sponsored-label-info-icon");
+    ads.each(function (_i, elem) {
+      // console.log("Object " + i + " contains an ad");
+      // $(this).css('background-color', 'red');
+      elem.remove();
     });
-    console.log("amazon-sponsored-items-blocker: " + count + " ads removed!");
+    console.log(
+      "amazon-sponsored-items-blocker: " + ads.length + " ads removed!"
+    );
     pageContentChanged = false;
   }
 }
