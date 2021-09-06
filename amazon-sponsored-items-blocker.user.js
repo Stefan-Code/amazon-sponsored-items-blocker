@@ -14,8 +14,12 @@
 // ==/UserScript==
 $ = jQuery.noConflict(true);
 let pageContentchanged = false;
-$("body").bind("DOMSubtreeModified", function () {
+const observer = new MutationObserver(() => {
   pageContentchanged = true;
+});
+observer.observe(document.body, {
+  childList: true,
+  subtree: true,
 });
 setInterval(removeSponsoredAds, 200);
 console.log("amazon-sponsored-items-blocker loaded");
