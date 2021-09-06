@@ -25,16 +25,18 @@ setInterval(removeSponsoredAds, 200);
 console.log("amazon-sponsored-items-blocker loaded");
 
 function removeSponsoredAds() {
-  if (pageContentChanged) {
-    const ads = $(".celwidget").has(".s-sponsored-label-info-icon");
-    ads.each(function (_i, elem) {
-      // console.log("Object " + i + " contains an ad");
-      // $(this).css('background-color', 'red');
-      elem.remove();
-    });
-    console.log(
-      "amazon-sponsored-items-blocker: " + ads.length + " ads removed!"
-    );
-    pageContentChanged = false;
+  // guard
+  if (!pageContentChanged) {
+    return;
   }
+  const ads = $(".celwidget").has(".s-sponsored-label-info-icon");
+  ads.each(function (_i, elem) {
+    // console.log("Object " + i + " contains an ad");
+    // $(this).css('background-color', 'red');
+    elem.remove();
+  });
+  console.log(
+    "amazon-sponsored-items-blocker: " + ads.length + " ads removed!"
+  );
+  pageContentChanged = false;
 }
