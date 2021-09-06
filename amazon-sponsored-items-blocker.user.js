@@ -29,10 +29,10 @@ function removeSponsoredAds() {
   if (!pageContentChanged) {
     return;
   }
-  const ads = $(".celwidget").has(".s-sponsored-label-info-icon");
-  ads.each(function (_i, elem) {
+  const ads = $(".AdHolder").has(".s-sponsored-label-info-icon");
+  ads.each(function (i, elem) {
     // console.log("Object " + i + " contains an ad");
-    // $(this).css('background-color', 'red');
+    // $(elem).css("background-color", "red");
     elem.remove();
   });
   console.log(
