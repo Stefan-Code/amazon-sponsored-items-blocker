@@ -27,7 +27,7 @@ console.log("amazon-sponsored-items-blocker loaded");
 function removeSponsoredAds() {
   if (pageContentChanged) {
     let count = 0;
-    $(".celwidget").each(function (i, obj) {
+    $(".celwidget").each(function (_i) {
       if ($(this).find(".s-sponsored-label-info-icon").length > 0) {
         //console.log("Object " + i + " contains an ad");
         //$(this).css('background-color', 'red');
