@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Amazon sponsored items blocker
 // @namespace    https://github.com/Stefan-Code/amazon-sponsored-items-blocker
-// @version      0.1
+// @version      0.2.0
 // @description  Blocks sponsored search results on amazon.com, amazon.co.uk and amazon.de
 // @author       Stefan-Code
 // @include      *://www.amazon.de/*
@@ -13,25 +13,30 @@
 // @run-at document-end
 // ==/UserScript==
 $ = jQuery.noConflict(true);
-var pageContentchanged = false;
-$('body').bind("DOMSubtreeModified", function() {
-    pageContentchanged = true;
+let pageContentChanged = false;
+const observer = new MutationObserver(() => {
+  pageContentChanged = true;
+});
+observer.observe(document.body, {
+  childList: true,
+  subtree: true,
 });
 setInterval(removeSponsoredAds, 200);
 console.log("amazon-sponsored-items-blocker loaded");
 
 function removeSponsoredAds() {
-    if (pageContentchanged) {
-        var count = 0;
-        $('.celwidget').each(function(i, obj) {
-            if ($(this).find(".s-sponsored-label-info-icon").length > 0) {
-                //console.log("Object " + i + " contains an ad");
-                //$(this).css('background-color', 'red');
-                (this).remove();
-                count++;
-            }
-        });
-        console.log("amazon-sponsored-items-blocker: " + count + " ads removed!");
-        pageContentchanged = false;
-    }
+  // guard
+  if (!pageContentChanged) {
+    return;
+  }
+  const ads = $(".AdHolder");
+  ads.each(function (i, elem) {
+    // console.log("Object " + i + " contains an ad");
+    // $(elem).css("background-color", "red");
+    elem.remove();
+  });
+  console.log(
+    "amazon-sponsored-items-blocker: " + ads.length + " ads removed!"
+  );
+  pageContentChanged = false;
 }
